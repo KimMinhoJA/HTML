@@ -1,0 +1,9 @@
+@charset "UTF-8";
+/*CSS 주석*/
+*{
+	box-sizing : border-box;
+}
+/*위에처럼 하면 모든 박스의 크기가 내가 설정한 크기그대로 설정이 된다.(마진 패딩 그런거 다 포함)*/
+body{
+	background-color: lightblue !important;
+}

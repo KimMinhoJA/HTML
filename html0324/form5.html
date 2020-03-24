@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Form태그에 대해서 여러가지 알아보자</title>
+</head>
+<body>
+<form action = "a.jsp" autocomplete="off">
+	<input placeholder="ID를 입력하세요" name = "id"><br>
+	<input type = "number" min = "1" max = "10" value = "5"><br>
+	<input type="email" value = "a@b.com"><br>
+	<input type="search" value = "검색"><br>
+	<input type="date"><br>
+	<input type ="tel"><br>
+	<input type = "range" value = "5" min = "1" max = "10"><br>
+	<input type = "submit" value ="전송"><br>
+</form>
+
+
+<form id = "f1" action = "a.jsp" autocomplete="off"></form>
+	<label>ID : 	</label><input form="f1" placeholder="ID를 입력하세요" name = "id" required autofocus><br>
+	<label>NUMBER : </label><input form="f1" type = "number" min = "1" max = "10" value = "5" disabled><br>
+	<label>EMAIL : 	</label><input form="f1" type="email" value = "a@b.com" readonly><br>
+	<label>SEARCH : </label><input form="f1" type="search" value = "검색"><br>
+	<label>DATE : 	</label><input form="f1" type="date"><br>
+	<label>TEL : 	</label><input form="f1" type ="tel"><br>
+	<label>RANGE : 	</label><input form="f1" type = "range" value = "5" min = "1" max = "10"><br>
+							<input form="f1" type = "submit" value ="전송"><br>
+
+
+<hr>
+<form action = "a.jsp">
+	<label>ID : 	</label><input placeholder="ID를 입력하세요" 
+									name = "id" 
+									required 
+									autofocus><br>
+									
+	<input type = "button" value = "버튼1">
+	<input type = "submit" value = "전송1">
+	<button>전송2</button>
+</form>
+<button>버튼2</button>
+
+
+</body>
+</html>

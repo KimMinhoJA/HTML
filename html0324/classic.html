@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>MinoHome</title>
+</head>
+<body>
+	<!-- HTML주석 사용 방법! -->
+	<h1>제목1</h1>
+	<h5>우오오오오옷</h5>
+	<p>
+		단락1<br> 가나다라마바사<br> 아메아메아메아메<br>
+
+	</p>
+	<p id = "p2">
+		목록을 알아보자<br>
+	<ol style="list-style-type: upper-roman;">
+		<li>사과</li>
+		<li>오렌지</li>
+		<li>바나나</li>
+	</ol>
+	<ul style="list-style-type: square;">
+		<li>사과</li>
+		<li>오렌지</li>
+		<li>바나나</li>
+	</ul>
+
+	<p>
+		표<br>	
+	<table style="width:300px; border: 1px solid;">
+		<thead>
+		<tr>
+			<th>1</th>
+			<th>2</th>
+			<th>3</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="border:1px dotted;" colspan="2">ab</td>
+			<td style="border:1px dotted;" rowspan="2">c</td>
+		</tr>
+		<tr>
+			<td>가</td>
+			<td>나</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td>end1</td>
+			<td>end2</td>
+		</tr>
+		</tfoot>
+	</table>
+
+<p>이미지<br>
+	<!-- <img src="./images/a.png" alt="a.png입니다.">
+	<img src="../html/images/a.png" alt="a.png입니다."> 권장하지 않는다.-->
+	<!-- 그냥 /만 사용하면 웹 프로젝터명이라는 의미가 된다. -->
+	<img src="/html/images/a.png" alt="a.png입니다."><br>
+	<img src = "http://localhost:8888/html/images/a.png" alt="a.png입니다."><br>
+	<img src="/html/images/a.png" alt="a.png입니다."
+		width="100px" height="100px"><br>
+	<img src="/html/images/a.png" alt="a.png입니다."
+		width="100%" height="100%"><br>
+		
+</p>
+
+<p> 링크<br>
+	<a href="http://www.daum.net">다음</a>&nbsp;
+	<a href="http://www.google.com">구글</a>
+	<a href="http://192.168.0.152:8888/html/classic.html">수빈</a>
+	<a href="/html/sub.html">서브</a>
+	<a href="#p2">단락2</a> <!-- id속성값이 p2인곳으로 이동 -->
+</p>
+
+
+<p> 영역<br>
+	<div style="border:1px solid;width:100px;height:100px; background-color:#FFCCDD; margin:5px; padding:3px">div1</div>
+	<div style="border:1px solid;width:100px;height:100px; background-color:#99CCDD; margin:5px; padding:3px">div2</div>
+	<span style="border:1px solid;width:100px;height:100px; background-color:#99CC55;margin:5px; padding:3px">span1</span>
+	<span style="border:1px solid;width:100px;height:100px; background-color:#FFCC55">span2</span><br>
+	div태그는 대표 블럭요소이다.<br>
+	span태그는 대표 인라인 요소이다.<br>
+	<ol>
+		<li>블럭요소 : 1줄을 모두 사용(자동 줄 바꿈), 크기 지정 가능
+			- div, table, tr, h1~h6, p, ol, ul, li
+		</li>
+		<li>인라인요소 : 자동 줄 바꿈이 안된다, 크기 지정이 불가능
+						content(내용)만큼 크기 자동지정.
+						상하마진 무시
+			- span, a
+		</li>
+		<li>인라인블럭요소 : 자동 줄 바꿈이 안된다, 크기 지정은 가능하다.
+			- img, td
+		</li>
+	</ol>
+<p>form관련태그<br>
+	<form action="http://www.naver.com"> <!-- submit으로 보내는 내용이 전달되는 곳 -->
+		텍스트 : <input name = "t" 
+						value = "default" 
+						maxlength="10"
+						style="width:100px; height:80px;"><br>
+		패스워드 : <input type="password" name = "p">	<br>
+		<!-- checkbox는 여러개 체크할 수 있도록 함 -->
+		<input type="checkbox" name = "fruit" value = "apple">사과 &nbsp;&nbsp;
+		<input type="checkbox" name = "orange" value = "orange">오렌지 &nbsp;&nbsp;
+		<input type="checkbox" name = "banana" value = "banana">바나나 &nbsp;&nbsp;
+		<br>
+		<!-- radio은 name으로 속성을 맞춰서 하나만을 체크할 수 있도록 한다. -->
+		<input type="radio" name="fruit" value = "apple">사과&nbsp;&nbsp;
+		<input type="radio" name="fruit" value = "orange">오렌지&nbsp;&nbsp;
+		<input type="radio" name="fruit" checked value = "banana">바나나&nbsp;&nbsp;
+		<br>
+		
+		Hidden : <input type="hidden" name="h" value="hiddenValue"><br>
+		<select name = "s">
+			<option value = "j">자바</option>
+			<option value = "p3" selected>Python3</option>
+			<option value = "p2">Python2</option>
+		</select>
+		<br>
+		<textarea rows = "5" cols="60"></textarea>
+		
+		<!-- form태그를 이용해서 내용을 전달할 때 반드시 name을 지정을 해주어야한다. -->
+		<input type="button" value = "그냥 버튼"><br>
+		<input type="submit" value = "전송"><br>		<!-- 내가 입력한 값들이 form에서 action으로 지정한 곳으로 내용이 전달됨 -->
+		<input type="reset" value = "CLEAR"><br>		<!-- 내가 입력한 값들이 초기화 된다. -->
+	</form>
+	
+	
+	<hr>
+	<form action = "a.jsp"
+			method = "post"
+			enctype="multipart/form-data">
+		파일업로드 : <input type="file" name="f1">
+		<input type = "submit" value="전송">
+	</form>
+
+
+<br>
+<p>
+	<a href="/html/semantic.html">2일차</a>
+</p>
+</body>
+</html>
