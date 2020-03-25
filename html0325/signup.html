@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+	<style>
+		*{
+			box-sizing: border-box;;
+		}
+		table{
+			border: 1px solid;
+			border-collapse: collapse;
+		}
+		tr{
+			border-bottom: 1px dotted;
+		}
+		.col1{
+			text-align: center;
+		}
+		label:after {
+			content: " : ";
+		}
+		#joinbutton{
+			/*display:none;*/
+			visibility: hidden;
+		}
+	</style>
+</head>
+<body>
+	<section>
+	회원가입
+	<form id="signup" autocomplete="off"></form>
+		<table>
+			<tr>
+				<td class="col1"><label>ID</label></td>
+				<td class="col2"><input form = "signup" class= "id" type="text" placeholder="Id를 입력하세요." required maxlength="20" autofocus></td>
+				<td class="col3"><input class="id" id="signup" type="submit" value="중복확인"></td>
+			</tr>
+			<tr>
+				<td class="col1"><label>비밀번호</label></td>
+				<td class="col2"><input form="signup" type="password" placeholder="비밀번호를 입력하세요." required maxlength="16"></td>
+				<td class="col3"></td>
+			</tr>
+			<tr>
+				<td class="col1"><label>비밀번호 확인</label></td>
+				<td class="col2"><input form="signup" type="password" placeholder="비밀번호를 입력하세요." required></td>
+				<td class="col3"><input type="text" disabled hidden = ""></td>
+			</tr>
+			<tr>
+				<td class="col1"><label>이름</label></td>
+				<td class="col2"><input form="signup" type="text" maxlength="10" required placeholder="이름을 입력하세요."></td>
+				<td class="col3"></td>
+			</tr>
+			<tr>
+				<td class="col1"><label>성별</label></td>
+				<td class="col2">
+					<input form="signup" name = "gender" type="radio" checked>남 
+					<input form="signup" name = "gender" type="radio">여 
+				</td>
+				<td class="col3"></td>
+			</tr>
+			<tr>
+				<td class="col1"><input id="joinbutton" form="signup" type="submit" value = "가입하기"></td>
+				<td class="col2"><input form="signup" type="reset" value = "CLEAR"></td>
+				<td class="col3"></td>
+			</tr>
+		</table>
+	</section>
+</body>
+</html>

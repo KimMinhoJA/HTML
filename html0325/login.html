@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그인 하시오</title>
+	<link rel="stylesheet" 
+		  type="text/css" 
+		  href="/html/css/my.css">
+	<style>
+		td.bottom{
+			border-bottom:1px solid;
+		}
+		#idCheck{
+			text-align: right;
+		}
+	</style>
+</head>
+
+<body>
+	<form action="/html/login.jsp" autocomplete="off" >
+		<table style="border:1px solid; width:50%; text-align: center; background:lightblue">
+			<tr>
+				<td class = "bottom"><label>ID : </label></td>
+				<td><input type = "text" 
+							name = "id" 
+							placeholder="ID를 입력하세요." 
+							autofocus 
+							required
+							maxlength="10"></td>
+			</tr>
+			
+			<tr>
+				<td class = "bottom"><label>비밀번호 : </label></td>	
+				<td><input type = "password" 
+							name = "pwd" 
+							placeholder="비밀번호를 입력하세요." 
+							required
+							maxlength="16"></td>
+			</tr>
+			
+			<tr>
+			<td id="idCheck" colspan="2"><input type="checkbox" checked>ID저장하기</td>
+			</tr>
+			<tr>
+				<td><button>로그인</button></td>	
+				<td><input type="reset" value = "CLEAR"></td>
+			</tr>
+			
+			<tr>
+				<td><a href = "#">ID찾기</a>&nbsp;&nbsp;</td>
+				<td><a href = "#">비밀번호찾기</a></td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>
