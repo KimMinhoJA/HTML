@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이벤트 처리 예제 2</title>
+	<script>
+		function init(){
+			//1. dom트리에서 button객체 찾기
+			var bObj = document.querySelector("button[type=button]");
+			
+			// dom트리에서 form객체 찾기
+			// dom트리에서 button[type = submit]객체 찾기
+			var formObj = document.querySelector("form");
+			
+			var submitObj = document.querySelector("button[type = submit]");
+			
+			var textObj = document.querySelector("form>input[type=text]");
+			
+			
+			//select 객체 찾아보기
+			var selectObj = document.querySelector("#subject");
+			selectObj.addEventListener("click", function(){
+				console.log("select객체의 click이벤트 발생");
+			});
+
+			var select2Obj = document.querySelector('#subject2');
+			
+			
+			selectObj.addEventListener("change", function(){
+				console.log("select객체의 change이벤트 발생");
+				select2Obj.style.display = "block";
+				select2Obj.innerHTML = "";
+				switch(this.value){
+				case "JAVA":
+					select2Obj.innerHTML = "<option>JDBC</option>";
+					select2Obj.innerHTML += "<option>JSP</option>";
+					select2Obj.innerHTML += "<option>SPRING</option>";
+					break;
+				case "Python" :
+					select2Obj.innerHTML = "<option>dJango</option>";
+					select2Obj.innerHTML += "<option>데이터분석</option>";
+					select2Obj.innerHTML += "<option>머신러닝</option>";
+					break;
+				case "HTML" : 
+					select2Obj.innerHTML = "<option>CSS</option>";
+					select2Obj.innerHTML += "<option>JavaScript</option>";
+					select2Obj.innerHTML += "<option>TypeScript</option>";
+					break;
+				case "과목을 선택하세요" :
+					select2Obj.style.display="none";
+				}
+			});
+
+			
+			
+			//해당 선택자의 모든 객체들을 배열 타입으로 반환한다.
+			var checkObjs = document.querySelectorAll("form>fieldset>input[type=checkbox]");
+			//var arr = [] -->배열 생성임
+			for(var i = 0; i < checkObjs.length; i++){
+				var checkObj = checkObjs[i];
+				if(checkObj.checked){
+					console.log("선택!");
+				}
+			}
+			var spanObjs = document.querySelectorAll("form>fieldset>input[type=checkbox]+span");
+
+// 			for(var i = 0; i < checkObjs.length; i++){
+// 				(function(a){
+// 					checkObjs[a].addEventListener("click", function(){
+// 						if(this.checked){
+// 							console.log(spanObjs[a].innerHTML + "가 선택됨");
+// 						}else{
+// 							console.log(spanObjs[a].innerHTML + "가 선택안됨");
+// 						}
+// 					});
+// 				})(i);
+// 			}
+			
+			for(var i = 0; i < checkObjs.length; i++){
+				checkObjs[i].addEventListener("click", function(){
+					var fruit = this.nextSibling.innerHTML;
+					//현재 객체 중심으로 다음 객체를 찾아온다.
+					if(this.checked){
+						console.log(fruit + "가 선택됨");
+					}else{
+						console.log(fruit + "가 선택안됨");
+					}
+				});
+			}
+			
+			textObj.addEventListener("click", function(){
+				console.log("text객체의 click이벤트 발생");
+			});
+			textObj.addEventListener("focus", function(){
+				console.log("text객체의 focus이벤트 발생");
+			});
+			textObj.addEventListener("keyup", function(){
+				var str = this.value;
+				this.value = str.toUpperCase();
+			});
+			
+			//2. button객체에 이벤트 핸들러 추가 이벤트 종류 : click, 할일 : 콜백함수
+			bObj.addEventListener("click", function(){
+				//console.log("클릭되었습니다.");
+				window.alert("클릭되었습니다.");
+			});
+			
+			//formObj객체에 이벤트핸들러 추가
+			//이벤트 종류 : submit
+			formObj.addEventListener("submit", function(event){
+				alert("form객체의 submit이벤트 발생");
+				//event.preventDefault();	//자동 form의 action속성에 기술된 url로 전송 막기
+				this.action = "/html/signup.jsp";		//form의 url을 내맘대로 변경
+			});
+			
+			//submitObj객체에 이벤트핸들러 추가
+			//이벤트종류 : submit
+			//submit버튼은 click이벤트 발생 후 자동 form의 submit이벤트가 발생됨 -> 막을 수 있다.
+			submitObj.addEventListener("click", function(event){
+				alert("submit버튼 객체의 clikc이벤트 발생");
+				//event.preventDefault();//자동 form의 submit이벤트 발생되는 것을 막는다.
+			});
+			
+			
+			//DOM트리에 객체 추가
+			//1. 객체 생성
+			var select3Obj = document.createElement("select");
+			var optionObj = document.createElement("option");
+			var textObj = document.createTextNode('ORACLE');
+			
+			var attrObj = document.createAttribute("id");
+			attrObj.value = 'subject3';
+			select3Obj.setAttributeNode(attrObj);
+			
+			optionObj.append(textObj);
+			select3Obj.append(optionObj);
+			//2. 추가
+			formObj.append(select3Obj);
+			
+		};
+		window.addEventListener("load", init);
+	</script>
+	
+	<style>
+	#subject2{
+		display: none;
+	}
+	</style>
+</head>
+<body>
+	<form action = "/html/login.jsp">
+		<input type="text" value="text">
+		<fieldset>
+			<input type="checkbox"><span>사과</span> <input type="checkbox"><span>오렌지</span>
+			<input type="checkbox"><span>바나나</span>
+		</fieldset>
+		<select id = "subject">
+			<option>과목을 선택하세요</option>
+			<option>JAVA</option>
+			<option>Python</option>
+			<option>HTML</option>
+		</select> <br>	
+		<select id = "subject2">
+		</select>
+		<button type="button">버튼</button>
+		<button type="submit">전송</button>
+	</form>
+</body>
+</html>

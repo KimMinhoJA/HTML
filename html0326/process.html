@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>자바스크립트 이벤트 처리 예제 1</title>
+<script>
+	console.log("1");
+	function init(){
+		//p요소에서 click되면 console에 출력하시오
+			
+		//1.p요소용 객체를 DOM에서 찾기
+		//var pObj = document.getElementById("p1");
+		var pObj = document.querySelector("p");
+		
+		//객체의 프로퍼티들
+		console.log(pObj);
+		console.log(pObj.id);
+		console.log(pObj.innerHTML);
+		
+		//객체의 메서드
+		//이벤트 핸들러 등록. 이벤트 종류 : click, 할일 : 콜백함수
+		pObj.addEventListener("click", function(){
+			console.log('클릭되었습니다.');
+			this.style.color='red';
+			
+			var dObj = document.querySelector("div");
+
+// 			if(dObj.style.display == 'none'){
+// 				dObj.style.display = "block";
+// 			}else{
+// 				dObj.style.display = 'none';
+// 			}
+
+			if(dObj.style.visibility == 'hidden'){
+				dObj.style.visibility = 'visible';
+			}else{
+				dObj.style.visibility = 'hidden';
+			}
+		});
+	}
+	window.addEventListener("load", init);	
+</script>
+</head>
+<body>
+	<script>
+	console.log("2");
+</script>
+
+
+	<p id="p1">단락1</p>
+
+	<div>DIV1</div>
+	
+	<script>
+	
+
+</script>
+
+
+
+</body>
+</html>
