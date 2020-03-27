@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>계산기</title>
+
+<style>
+	*{
+		box-sizing: border-box;
+	}
+	table{
+		border:1px solid;
+		width:250px;
+		height: 300px;
+	}
+	th{
+		border-bottom:1px solid;
+	}
+	th>input{
+		text-align:right;
+		width:100%;
+		height:100%;
+	}
+	tr>td>input{
+		text-align: center;
+		width:90%;
+		height:90%;
+	}
+</style>
+
+<script>
+	function init(){
+		var buttonObjs = document.querySelectorAll("input[type=button]");
+		var textObj = document.querySelector("th>input[type=text]");
+		var resetObj = document.querySelector("input[type=reset]");
+		
+		textObj.value = "";
+		var operator = "#";
+		var prevalue = "";
+		var provalue = "";
+		var numcnt = 0;
+		var flush = false;
+		var equalflush = false;
+
+		
+		for(var i = 0; i < buttonObjs.length; i++){
+			if(buttonObjs[i].className == "operator"){
+				buttonObjs[i].addEventListener("click", function(){
+					switch(this.value){
+					case "=" :
+						//이전에 숫자가 없을 때
+						if(textObj.value == "" || textObj.value == "-"){
+							break;
+						}
+						//이전에 숫자 한 개 있을 때
+						else if(numcnt == 0){
+							flush = true;
+						}
+						//이전에 숫자 2개랑 연산자가 있을 때
+						else{
+							if(!equalflush){
+								equalflush = true;
+								provalue = parseFloat(textObj.value);
+							}
+							switch(operator){
+							case "/" : 
+								textObj.value = prevalue / provalue;
+								break;
+							case "*" : 
+								textObj.value = prevalue * provalue;
+								break;
+							case "+" : 
+								textObj.value = prevalue + provalue;
+								break;
+							case "-" : 
+								textObj.value = prevalue - provalue;
+								break;
+							}
+							prevalue = parseFloat(textObj.value);
+							flush = true;
+						}
+						break;
+					case "-" :
+						//=을 누른 후의 경우
+						if(equalflush){
+							equalflush = false;
+							provalue = "";
+							operator = "#";
+							numcnt = 0;
+						}
+						//이전에 숫자가 없을 때
+						if(textObj.value == "" || textObj.value == "-"){
+							textObj.value = "-";
+						}
+						//이전에 숫자 1개를 받은 경우
+						else if(numcnt == 0){
+							operator = this.value;
+							numcnt++;
+							prevalue = parseFloat(textObj.value);
+							flush = true;
+						}
+						//이전에 숫자 1개를 받았는데 변경하려고 하는 경우
+						else if(numcnt == 1 && flush){
+							operator = this.value;
+						}
+						//이전에 숫자 2개를 받은 경우 -> 연산해야함
+						else{
+							switch(operator){
+							case "/" : 
+								textObj.value = prevalue / parseFloat(textObj.value);
+								break;
+							case "*" : 
+								textObj.value = prevalue * parseFloat(textObj.value);
+								break;
+							case "+" : 
+								textObj.value = prevalue + parseFloat(textObj.value);
+								break;
+							case "-" : 
+								textObj.value = prevalue - parseFloat(textObj.value);
+								break;
+							}
+							operator = this.value;
+							prevalue = parseFloat(textObj.value);
+							flush = true;
+						}
+						break;
+					default : 
+						//=을 누른 후의 경우
+						if(equalflush){
+							equalflush = false;
+							provalue = "";
+							operator = "#";
+							numcnt = 0;
+						}
+						//이전에 숫자가 없을 때
+						if(textObj.value == "" || textObj.value == "-"){
+							break;
+						}
+						//이전에 숫자 1개를 받은 경우
+						else if(numcnt == 0){
+							operator = this.value;
+							numcnt++;
+							prevalue = parseFloat(textObj.value);
+							flush = true;
+						}
+						//이전에 숫자 1개를 받았는데 변경하려고 하는 경우
+						else if(numcnt == 1 && flush){
+							operator = this.value;
+						}
+						//이전에 숫자 2개를 받은 경우 -> 연산해야함
+						else{
+							switch(operator){
+							case "/" : 
+								textObj.value = prevalue / parseFloat(textObj.value);
+								break;
+							case "*" : 
+								textObj.value = prevalue * parseFloat(textObj.value);
+								break;
+							case "+" : 
+								textObj.value = prevalue + parseFloat(textObj.value);
+								break;
+							case "-" : 
+								textObj.value = prevalue - parseFloat(textObj.value);
+								break;
+							}
+							operator = this.value;
+							prevalue = parseFloat(textObj.value);
+							flush = true;
+						}
+					}
+				});
+			}else{
+				buttonObjs[i].addEventListener("click",function(){
+					if(flush){
+						textObj.value = "";
+						flush = false;
+					}
+					textObj.value += this.value;
+				});
+			}
+		}
+		
+		resetObj.addEventListener("click", function(){
+			operator = "#";
+			prevalue = "";
+			numcnt = 0;
+			flush = false;
+			provalue = "";
+			equalflush = false;
+		});
+		
+	};
+	window.addEventListener("load",init);
+</script>
+</head>
+<body>
+	<form>
+		<table>
+			<tr>
+				<th colspan="4"><input type="text" readonly maxlength="20"><span></span></th>
+			</tr>
+			<tr>
+				<td><input class="number" type="button" value="7"></td>
+				<td><input class="number" type="button" value="8"></td>
+				<td><input class="number" type="button" value="9"></td>
+				<td><input class="operator" type="button" value="/"></td>
+			</tr>
+			<tr>
+				<td><input class="number" type="button" value="4"></td>
+				<td><input class="number" type="button" value="5"></td>
+				<td><input class="number" type="button" value="6"></td>
+				<td><input class="operator" type="button" value="*"></td>
+			</tr>
+			<tr>
+				<td><input class="number" type="button" value="1"></td>
+				<td><input class="number" type="button" value="2"></td>
+				<td><input class="number" type="button" value="3"></td>
+				<td><input class="operator" type="button" value="-"></td>
+			</tr>
+			<tr>
+				<td><input class="number" type="button" value="0"></td>
+				<td><input type="reset" value="C"></td>
+				<td><input class="operator" type="button" value="="></td>
+				<td><input class="operator" type="button" value="+"></td>
+			</tr>
+		</table>
+	</form>
+
+</body>
+</html>

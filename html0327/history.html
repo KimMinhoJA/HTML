@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>히스토리 기능 구현</title>
+<script>
+	//window.addEventListener(load, function(){});
+	window.onload = function(){
+// 		var btBackObj = document.querySelector("button:first-child");
+// 		var btFowardObj = document.querySelector("button:nth-child(2)");
+// 		//btBackObj.addEventListener("click", function(){});
+		
+// 		//뒤로가기
+// 		btBackObj.onclick = function(){
+// 			window.history.go(-1);
+// 		};
+		
+// 		//앞으로가기
+// 		btFowardObj.onclick = function(){
+// 			window.history.go(1);	
+// 		};
+	//한번에 처리해보기
+		var btObjs = document.querySelectorAll("button");
+		for(var i = 0; i < btObjs.length; i++){
+			(function(a){
+				var value = 0;
+				switch(a){
+				case 0:
+					value = -1;
+					break;
+				case 1:
+					value = 1;
+					break;
+				}
+				btObjs[a].onclick = function(){
+					window.history.go(value);
+				};
+			})(i);
+		};
+	};
+</script>
+</head>
+<body>
+	<button>뒤로</button>
+	<button>앞으로</button>
+</body>
+</html>
