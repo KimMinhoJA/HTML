@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이벤트 전파 예제</title>
+	<style>
+		div{
+			border: 1px solid;
+			width: 300px;
+			background: lightblue;
+		}
+		a{
+			background: yellow;
+			text-decoration: none;
+		}
+	</style>
+	<script>
+		window.addEventListener("load", function(){
+			var aObj = document.querySelector("a");
+			var divObj = document.querySelector("div");
+			
+			aObj.addEventListener("click", function(event){
+				alert("클릭되었습니다.");
+				aObj.style.backgroundColor = "gray";
+				event.preventDefault();//기본 이벤트 처리 막기
+				event.stopPropagation();//이벤트 전파 막기
+			});
+			
+			divObj.addEventListener("click", function(){
+				this.style.backgroundColor = "red";
+			});
+		});
+	</script>
+</head>
+<body>
+<div>
+	<a href = "https://www.daum.net">다음</a>
+</div>
+</body>
+</html>

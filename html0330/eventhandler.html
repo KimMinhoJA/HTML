@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>이벤트 처리 예제 2</title>
+	<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		$(function(){
+			
+			//1. dom트리에서 button객체 찾기
+			var $bObj = $("button[type = button]");
+			
+			// dom트리에서 form객체 찾기
+			// dom트리에서 button[type = submit]객체 찾기
+			var $formObj = $("form");
+			var $submitObj = $("button[type = submit]");
+			var $textObj = $("form>input[type=text]");
+			
+			//select 객체 찾아보기
+			var $selectObj = $("#subject");
+			$selectObj.click(function(){
+				console.log("select객체의 click이벤트 발생");
+			});
+
+			var $select2Obj = $("#subject2");
+
+			$selectObj.change(function(){
+				console.log("select객체의 change이벤트 발생");
+				$select2Obj.css("display","block");
+				$select2Obj.html("");
+				switch($selectObj.val()){
+				case "JAVA" : 
+					$select2Obj.html("<option>JDBC</option>");
+					$select2Obj.html($select2Obj.html() + "<option>JSP</option>");
+					$select2Obj.html($select2Obj.html() + "<option>SPRING</option>");
+					break;
+				case "Python" : 
+					$select2Obj.html("<option>dJango</option>");
+					$select2Obj.html($select2Obj.html() + "<option>데이터분석</option>");
+					$select2Obj.html($select2Obj.html() + "<option>머신러닝</option>");
+					break;
+				case "HTML" :
+					$select2Obj.html("<option>CSS</option>");
+					$select2Obj.html($select2Obj.html() + "<option>JavaScript</option>");
+					$select2Obj.html($select2Obj.html() + "<option>TypeScript</option>");
+					break;
+				case "과목을 선택하세요" :
+					$select2Obj.css("display", "none");
+				}
+			});
+			
+			//해당 선택자의 모든 객체들을 배열 타입으로 반환한다.
+			var $checkObjs = $("form>fieldset>input[type=checkbox]");
+			var $spanObjs = $("form>fieldset>input[type = checkbox] + span");
+			
+			for(var i = 0; i < $checkObjs.length; i++){
+				$($checkObjs[i]).click(function(){
+					var fruit = $(this).next().html();
+					if($(this).prop("checked")){
+						console.log(fruit + "가 선택됨");
+					}else{
+						console.log(fruit + "가 선택안됨");
+					}
+				});
+			}
+			
+			$textObj.click(function(){
+				console.log("text객체의 click이벤트 발생");
+			})
+			$textObj.focus(function(){
+				console.log("text객체의 focus이벤트 발생");
+			});
+			$textObj.keyup(function(){
+				var str = $(this).val();
+				$(this).val(str.toUpperCase());
+			});
+			
+			//2. button객체에 이벤트 핸들러 추가 이벤트 종류 : click, 할일 : 콜백함수
+			$bObj.click(function(){
+				alert("클릭되었습니다.");
+			});
+			
+			//formObj객체에 이벤트핸들러 추가
+			//이벤트 종류 : submit
+			$formObj.submit(function(){
+				alert("form객체의 submit이벤트 발생");
+				$(this).attr("action", "/html/signup.jsp");
+			});
+			
+			//submitObj객체에 이벤트핸들러 추가
+			//이벤트종류 : submit
+			//submit버튼은 click이벤트 발생 후 자동 form의 submit이벤트가 발생됨 -> 막을 수 있다.
+			$submitObj.click(function(){
+				alert("submit버튼 객체의 click이벤트 발생");
+			});
+			
+			
+			//DOM트리에 객체 추가
+			var $select3Obj = $("<select>").attr("id", "subject3");
+			var $optionObj = $("<option>").text("ORACLE");
+			
+			$select3Obj.append($optionObj);
+			$formObj.append($select3Obj);
+			
+		});
+	</script>
+	
+	<style>
+	#subject2{
+		display: none;
+	}
+	</style>
+</head>
+<body>
+	<form action = "/html/login.jsp">
+		<input type="text" value="text">
+		<fieldset>
+			<input type="checkbox" id = "apple"><span>사과</span> <input type="checkbox"><span>오렌지</span>
+			<input type="checkbox"><span>바나나</span>
+		</fieldset>
+		<select id = "subject">
+			<option>과목을 선택하세요</option>
+			<option>JAVA</option>
+			<option>Python</option>
+			<option>HTML</option>
+		</select> <br>	
+		<select id = "subject2">
+		</select>
+		<button type="button">버튼</button>
+		<button type="submit">전송</button>
+	</form>
+</body>
+</html>

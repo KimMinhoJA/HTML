@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery선택자 예제</title>
+
+<script>
+// 	window.addEventListener("load", function(){
+// 		var liObjs = document.querySelectorAll("li");
+// 		for(var i = 0; i < liObjs.length; i++){
+// 			console.log(liObjs[i].innerHTML);
+// 		}
+// 	});
+</script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+	//jQuery(document).ready(function(){});
+	//$(document).ready(function(){});
+	$(function(){
+		console.log("ready");
+		var liObjs = $("li");
+		
+		for(var i=0; i<liObjs.length; i++){
+			var liObj = liObjs[i];
+			//console.log(liObj.innerHTML); 여태까지 쓰던거
+			var jqObj = $(liObj) //-> jQuery객체가 된다.
+			console.log(jqObj.html());	//jQuery용 메서드
+		}
+		
+		//div객체찾기, 배경색 바꾸기
+		//var divObj = document.querySelector("div");
+		//divObj.style.background("lightblue");
+		
+		var divObj = $("div");  // --> jquery용 객체
+		divObj.css("background","lightblue");
+		var color = divObj.css("backgroundColor");
+	});
+</script>
+</head>
+<body>
+	<div>
+		<ul>
+			<li>first
+			<li>second
+			<li>third
+		</ul>
+	</div>
+	
+</body>
+</html>

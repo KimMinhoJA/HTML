@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>드래그 드랍을 사용해보기</title>
+<script>
+	window.addEventListener("load", function(){
+		var imgObj = document.querySelector("img");
+		var divObj = document.querySelector("div");
+		var count = 1;
+		
+		imgObj.addEventListener("dragstart", function(event){
+			event.dataTransfer.setData("text", event.target.id);
+			console.log(event.target.id);
+		});
+	
+		divObj.addEventListener("dragover", function(event){
+			//drop될 대상객체의 기본에벤트는 반드시 막는다.
+			event.preventDefault();
+			event.stopPropagation();
+		});
+		
+		divObj.addEventListener("drop", function(event){	
+			//drop될 대상객체의 기본이벤트는 반드시 막는다.
+			event.preventDefault();
+			event.stopPropagation();
+			var imgId = event.dataTransfer.getData("text");
+			console.log(imgId);
+			//찾아온 imgId에 해당하는 객체 찾기
+			var imgObj = document.querySelector("#" + imgId);
+			//현재객체의 하위요소로 imgObj1객체를 추가
+			//this.append(imgObj);
+			
+			//div객체의 형제요소인 이미지 객체를 복사해서 div객체의 하위요소로 추가
+			//hint: eventHandler.html의 요소 생성
+			var imgObjCopy = document.createElement("img");
+			var id = document.createAttribute("id");
+			var src = document.createAttribute("src");
+			var width = document.createAttribute("width");
+			var height = document.createAttribute("height");
+			var draggable = document.createAttribute("draggable");
+			
+			id.value = "img" + ++count;
+			src.value = imgObj.src;
+			width.value = imgObj.width;
+			height.value = imgObj.height;
+			draggable.value = imgObj.draggable;
+			
+			imgObjCopy.setAttributeNode(id);
+			imgObjCopy.setAttributeNode(src);
+			imgObjCopy.setAttributeNode(width);
+			imgObjCopy.setAttributeNode(height);
+			imgObjCopy.setAttributeNode(draggable);
+			
+			divObj.append(imgObjCopy);
+		});
+
+	});
+</script>
+</head>
+<body>
+	<div id = "div1" style="width:300px; height:300px; border:1px solid;"></div>
+	<img src = "/html/images/a.png" id = "img1" width = "50px" height = "50px" draggable = "true">
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>회원가입</title>
+<style>
+* {
+	box-sizing: border-box;;
+}
+
+table {
+	border: 1px solid;
+	border-collapse: collapse;
+}
+
+tr {
+	border-bottom: 1px dotted;
+}
+
+.col1 {
+	text-align: center;
+}
+
+label:after {
+	content: " : ";
+}
+
+.btSignup{
+	display : none;
+}
+
+
+/*스타일 만들어 놓는거임*/
+/* .show{ */
+/* 	display: inline-block; */
+/* } */
+/* .hide{ */
+/* 	display: none; */
+/* } */
+</style>
+<script src = "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+	/*
+	1.중복확인
+		1. 중복확인 버튼이 클릭되면
+			form객체의 action속성값을 '/html/idDupChk.jsp'로 설정
+		2. 가입하기 버튼 보여주기
+	2. id입력한이 활성화되면(focus)
+		1. 가입하기버튼 사라지게한다
+		2. id입력란의 문자열이 선택되게 한다. ex)obj.select();
+	3. 가입하기버튼이 클릭되면(form객체의 submit처리)
+		1. form객체의action속성값을 '/html/signup.jsp'로 설정
+		2. 기본 이벤트 핸들러(signup.jsp전송)막기
+		3. 비밀번호1, 2값이 다른경우
+			alert("비밀번호가 서로 다릅니다.");
+			비밀번호 1객체로 focus이동한다. ex)obj.focus();
+	 */
+// 	window.onload = function() {
+// 		var btDupchkObj = document.querySelector("button.btDupchk");
+// 		var btSignUpObj = document.querySelector("button.btSignUp");
+// 		var textIdObj = document.querySelector("input.id");
+// 		var formObj = document.querySelector("form");
+// 		var pwdObjs = document.querySelectorAll("input[type = password]");
+
+// 		textIdObj.addEventListener("focus", function() {
+// 			btSignUpObj.style.visibility = "hidden";
+// 			textIdObj.select();
+// 		});
+
+// 		btDupchkObj.addEventListener('click', function() {
+// 			formObj.action = '/html/idDupchk.jsp';
+// 			btSignUpObj.style.visibility = "visible";
+// 		});
+
+// 		formObj.addEventListener("submit", function(event) {
+// 			formObj.action = '/html/signup.jsp';
+// 			if (pwdObjs[0].value != pwdObjs[1].value) {
+// 				event.preventDefault();
+// 				alert("비밀번호가 서로 다릅니다.");
+// 				pwdObjs[0].focus();
+// 			}
+// 		});
+// 	 }
+		$(function(){
+			var $btDupchkObj = $("button.btDupchk");
+			var $btSignupObj = $("button.btSignup");
+			var $textIdObj = $("input.id");
+			var $formObj = $("form");
+			
+			$btDupchkObj.click(function(){
+				$formObj.attr("action", "/html/idDupchk.jsp");
+				//$btSignupObj.css("display", "inline-block");
+				$btSignupObj.show();
+				
+				
+				//클래스를 변경 -> 나중에 돔트리가 망가질 수 있기 때문에 그냥 스타일만 변경하는식으로 한다.
+// 				$btSignupObj.removeClass("hide");
+// 				$btSignupObj.addClass("show");
+			});
+			
+			$textIdObj.focus(function(){
+// 				$btSignupObj.css("display", "none");
+				$btSignupObj.hide();
+				
+				
+// 				$btSignupObj.removeClass("show");
+// 				$btSignupObj.addClass("hide");
+				$textIdObj.select();
+			});
+			
+			$formObj.submit(function(){
+				$formObj.attr("action", "/html/signup.jsp");
+				var $pwdObj1 = $("#pwd1");
+				var $pwdObj2 = $("#pwd2");
+				
+				if($pwdObj1.val() != $pwdObj2.val()){	//value property임
+					alert("비밀번호가 서로 다릅니다.");
+					$pwdObj1.focus();
+					$pwdObj1.select();
+					return false;	// 기본이벤트 막고 이벤트 전파까지 중지시킨다.
+				}
+			});
+		});
+</script>
+</head>
+<body>
+	<section>
+		회원가입
+		<form id="signup" autocomplete="off">
+			<table>
+				<tr>
+					<td class="col1"><label>ID</label></td>
+					<td class="col2"><input form="signup" class="id" type="text"
+						placeholder="Id를 입력하세요." required maxlength="20" autofocus></td>
+					<td class="col3"><button type = "button" class="btDupchk">중복확인</button></td>
+				</tr>
+				<tr>
+					<td class="col1"><label>비밀번호</label></td>
+					<td class="col2"><input form="signup" type="password"
+						placeholder="비밀번호를 입력하세요." required maxlength="16" id = "pwd1"></td>
+					<td class="col3"></td>
+				</tr>
+				<tr>
+					<td class="col1"><label>비밀번호 확인</label></td>
+					<td class="col2"><input form="signup" type="password"
+						placeholder="비밀번호를 입력하세요." required id = "pwd2"></td>
+					<td class="col3"></td>
+				</tr>
+				<tr>
+					<td class="col1"><label>이름</label></td>
+					<td class="col2"><input form="signup" type="text"
+						maxlength="10" required placeholder="이름을 입력하세요."></td>
+					<td class="col3"></td>
+				</tr>
+				<tr>
+					<td class="col1"><label>성별</label></td>
+					<td class="col2"><input form="signup" name="gender"
+						type="radio" checked>남 <input form="signup" name="gender"
+						type="radio">여</td>
+					<td class="col3"></td>
+				</tr>
+				<tr>
+					<td class="col1"><button type="submit" class="btSignup">가입하기</button></td>
+					<td class="col2"><input form="signup" type="reset"
+						value="CLEAR"></td>
+					<td class="col3"></td>
+				</tr>
+			</table>
+		</form>
+	</section>
+</body>
+</html>
