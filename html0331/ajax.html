@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ajax기술 연습</title>
+<script src = "/html/lib/jquery-3.4.1.min.js"></script>
+<script>
+	$(function(){
+		$("form").submit(function(){
+			var action = $(this).attr("action");
+			$.ajax({
+				url		:	action, 		//요청할(전송할) url
+				success	:	function(responseData){//응답받은 결과가 인자로 오게 된다.	응답이 성공시 자동호출된다.
+								//alert(responseData);
+								$("div").html(responseData);
+							}
+			});
+			return false;
+		});
+	});
+</script>
+</head>
+<body>
+	<div id = "result" style = "width: 300px; height: 100px">
+	
+	</div>
+	
+	<form action = "/html/signup.jsp">
+		<button>가입</button>
+	</form>
+</body>
+</html>

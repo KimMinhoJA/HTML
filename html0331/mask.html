@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>공적데이터 활용해보기</title>
+<script src="/html/lib/jquery-3.4.1.min.js"></script>
+<script>
+	$(function(){
+		$("form").submit(function(){
+			$.ajax({
+				url : $("form").attr("action"),
+				success : function(jsonObj){
+					$(jsonObj.stores).each(function(index, store){
+						if(this.remain_stat == "plenty")
+							console.log(this.name + " 재고 많음(100개 이상)");
+						else if(this.remain_stat == "some")
+							console.log(this.name + " 재고 보통(30 ~ 100개)");
+						else if(this.remain_stat == "few")
+							console.log(this.name + " 재고 적음(2 ~ 30개)");
+						else if(this.remain_stat == "empty")
+							console.log(this.name + " 재고 매우적음(1개 이하)");
+						else
+							console.log(this.name + " 판매 중지");
+							
+					});
+				}
+			});
+			return false;
+		});
+	});
+</script>
+</head>
+<body>
+	<form action = "https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat=37.401913&lng=127.107170">
+		<button>공적마스크</button>
+	</form>
+</body>
+</html>
