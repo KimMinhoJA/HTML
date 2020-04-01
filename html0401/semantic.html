@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>html연습 2일차</title>
+<style>
+ *{
+	box-sizing: border-box;
+ }
+ header{
+ 	border:1px solid;
+ 	background: #ccffcc;
+ }
+ 
+ nav ul{
+ 	width:100%;
+ 	border:1px solid;
+ 	background: lightblue;
+ 	text-align: right;
+ }
+ 
+ nav li{
+ 	display:inline-block;
+ 	margin-right:20px;
+ }
+ nav a{
+ 	text-decoration: none;
+ }
+ nav a:hover{
+ 	background: #FF9999;
+ 	font-weight: bold;
+ }
+ section{
+ 	width: 100%;
+ 	height: 500px;
+ 	border : 1px solid;
+ 	padding: 10px;
+ 	text-align: right;
+ }
+ 
+ aside{
+ 	border:1px solid;
+ 	width:20%;
+ 	display: block;
+ 	background: #00FF00;
+ 	display: inline-block;
+ 	text-align: center;
+ 	margin-bottom:5px;
+ 	over
+ }
+ 
+ article{
+ 	text-align:left;
+ 	border: 1px solid;
+ 	width: 70%;
+ 	height: 100px;
+ 	float: left;
+ 	display: inline-block;
+ 	padding: 5px;
+ 	overflow: auto;
+ 	margin-bottom:5px;
+ }
+ 
+ article:first-child{
+ 	text-align : center;
+ 	height:300px;
+ }
+ footer{
+ 	font-size:10px;
+ 	border: 1px solid;
+ 	margin-top: 10px;
+ 	color: fuchsia;
+ 	width:100%;
+ 	bottom:0;
+ }
+ 
+ a:hover{
+ 	color:
+ }
+ 
+ .highlight{
+ 	background-color: black;
+ }
+ 
+ .product:hover{
+ 	border:1px solid;
+ }
+ 
+</style>
+<script src="/html/lib/jquery-3.4.1.min.js"></script>
+<script>
+	$(function(){
+		//여태까지는 이미 존재하는 DOM객체의 이벤트 처리방법만을 하였다.
+		//향후 만들어질 이벤트 목록을 만들 수도 있다.
+		$("section>article").on("click", "table>tr>td.product", function(){
+			//productDetail.jsp를 요청
+			//전송데이터 : 상품번호(prod_no)
+			//응답성공되면 json객체타입으로 응답결과얻기
+			//json객체구조 : status-string:1, -1
+			//				 json객체에 product-object: status가 1인 경우
+			//									object내용 : prod_no
+			//												 prod_name
+			//												 prod_price
+			//				 msg : status가 -1인 경우
+			//					내용 : 상품찾지 못한경우의 상세예외메세지
+			$.ajax({
+				url: "/html/productDetail.jsp",
+				data : "prod_no=" + $(this).next().find("ul>li:first-child").html().substr(7,4),
+				success: function(jsonObj){
+					if(jsonObj.status == 1){
+						var $detailObj = $("article:nth-child(1)");
+						var $divObj = $('<div style="float:Left;">');
+						var $numSpanObj = $('<span>수량 : </span>');
+						var $numObj = $('<input type="number" value = 1 style="width:50px" min=1>');
+						var $buttonObj = $('<button id="addCart">');
+		
+						var imgHtml = '<img alt="이미지입니다." src="/html/images/'+ jsonObj.product.prod_no +'.PNG" style="width:240px; height: 240px">';
+						var innerHtml = '<div style="display:inline-block">상품번호 : ' + jsonObj.product.prod_no
+									+ "<br>상품명   : " + jsonObj.product.prod_name
+									+ "<br>상품가격 : " + jsonObj.product.prod_price + "</div><br>";
+						$buttonObj.html("장바구니에 넣기");
+						
+						$divObj.html(imgHtml);
+						$detailObj.empty();
+						$detailObj.append($divObj);
+						$detailObj.append(innerHtml);
+						$detailObj.append($numSpanObj);
+						$detailObj.append($numObj);
+						$detailObj.append($("<br>"));
+						$detailObj.append($buttonObj);
+						
+					}else{
+						console.log(jsonObj.msg);
+					}
+				}
+			});
+		});
+		
+		
+		$("section>article").on("click", "#addCart", function(){
+			$.ajax({
+				url : "/html/putCart.jsp",
+				data : "prod_no=" + $(this).parent().find("div:nth-child(2)").html().substr(7,4) 
+						+ "&quantity=" + $(this).parent().find("input").val(),
+				success : function(jsonObj){
+					console.log(jsonObj.msg + jsonObj.quantity);
+				}
+			});
+		});
+		
+		$("nav > ul > li > a").click(function(){
+			//section영역의 내용을 모두 지우기
+			$('nav>ul>li>a').not($(this)).removeClass('highlight');
+			$(this).addClass("highlight");
+			$("section>article:first-child").empty();
+
+			//현재객체의 href속성값
+			var href = $(this).attr("href");
+			switch(href){
+			case "viewCart.jsp" : 
+				$.ajax({
+					url : "/html/viewCart.jsp",
+					success : function(jsonObj){
+						if(jsonObj.status == 1){
+							$(jsonObj.products).each(function(index, cart){
+								var $trObj = $('<tr>');
+								var innerObj = '<td><img src="/html/images/'+ cart.product.prod_no 
+										+'.PNG" style="width:80px; height: 80px"></td>'
+										+ '<td><ul><li>상품번호 : '+ cart.product.prod_no 
+										+ "</li><li>상품명 : " + cart.product.prod_name 
+										+ "</li><li>상품가격 : " + cart.product.prod_price 
+										+ "</li><li>수량 : " + cart.quantity + "</li></ul></td>";
+								$trObj.html(innerObj);
+								$("section>article:first-child").append($trObj);
+							});
+						}else{
+							console.log(jsonObj.msg);
+						}
+					}
+				});
+				break;
+			case "productList.jsp" : 
+				$.ajax({
+					url: "/html/productList.jsp",
+					success: function(jsonObjArr){
+						var tableObj = $("<table>");
+						$(jsonObjArr).each(function(index, product){
+							
+							var innerDiv = '<tr>';
+							
+							innerDiv += '<td class="product"><img alt="이미지입니다." src="/html/images/'+product.prod_no +'.PNG" style="width:80px; height: 80px"></td>';
+							
+							innerDiv += "<td><ul>"
+							innerDiv += '<li>상품번호 : '+ product.prod_no+"</li>";
+							innerDiv += "<li>상품명   : "+ product.prod_name+"</li>";
+							innerDiv += "<li>상품가격 : "+ product.prod_price+"</li></td></tr>";
+							tableObj.append(innerDiv);
+							//var trObj = $(".product");
+							
+						});
+						$("article:first-child").append(tableObj);
+					}
+				});
+				break;
+			default :
+				$.ajax({
+					url : href,
+					success : function(responseData){
+						$("section>article:first-child").html(responseData);
+						}
+				});
+			}
+			return false;
+		});
+		
+		//어제 한 내용
+		//강제로 클릭 이벤트 발생시키기
+		$('nav>ul>li:nth-child(2)>a').trigger('click');
+	});
+</script>
+</head>
+<body>
+	<header>
+		<h1>KimMinHo's Home</h1>
+	</header>
+	
+	<nav>
+		<ul>
+			<li>
+				<a href="viewCart.jsp">장바구니 보기</a>
+			</li>
+			<li>
+				<a href="productList.jsp">상품목록</a>
+			</li>
+			<li>
+				<a href="/html/jq/0331/login.html">로그인</a>
+			</li>
+			<li>
+				<a href="/html/jq/0331/signup.html">회원가입</a>
+			</li>
+		</ul>	
+	</nav>
+	
+	<section>
+		<article>올림픽</article>
+		<article>야구<ul>
+				<li>두산베어스</li>
+				<li>LG트윈스</li>
+				<li>KT윙즈</li>
+				<li>롯데자이언츠</li>
+				<li>한화 이글스</li>
+			</ul>
+		</article>
+		<aside>광고1</aside>
+		<aside>연관정보</aside>
+	</section>
+
+	<footer>
+		<div>이용약관 운영정책 청소년 보호정책 개인정보처리방침</div>
+		<div>Copyright @ Mino Corp. All rights reserved.</div>
+	</footer>
+</body>
+</html>
